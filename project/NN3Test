@@ -1,0 +1,97 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import components.naturalnumber.NaturalNumber;
+import components.naturalnumber.NaturalNumber2;
+import components.queue.Queue;
+
+/**
+ * Customized JUnit test fixture for {@code NaturalNumber3}.
+ */
+public class NaturalNumber3Test extends NaturalNumberTest {
+
+    @Override
+    protected final NaturalNumber constructorTest() {
+
+        return new NaturalNumber3();
+    }
+
+    @Override
+    protected final NaturalNumber constructorTest(int i) {
+
+        return new NaturalNumber3(i);
+    }
+
+    @Override
+    protected final NaturalNumber constructorTest(String s) {
+
+        return new NaturalNumber3(s);
+    }
+
+    @Override
+    protected final NaturalNumber constructorTest(NaturalNumber n) {
+
+        return new NaturalNumber3(n);
+    }
+
+    @Override
+    protected final NaturalNumber constructorRef() {
+
+        return new NaturalNumber3();
+    }
+
+    @Override
+    protected final NaturalNumber constructorRef(int i) {
+
+        return new NaturalNumber3(i);
+    }
+
+    @Override
+    protected final NaturalNumber constructorRef(String s) {
+
+        return new NaturalNumber3(s);
+    }
+
+    @Override
+    protected final NaturalNumber constructorRef(NaturalNumber n) {
+
+        return new NaturalNumber3(n);
+    }
+
+    @Test
+    public final void testisZeroEmpty() {
+        /*
+         * Set up variables
+         */
+        NaturalNumber q = new NaturalNumber3();
+        NaturalNumber qExpected = new NaturalNumber3();
+        /*
+         * Call method under test
+         */
+        boolean i = q.isZero();
+        /*
+         * Assert that values of variables match expectations
+         */
+        assertEquals(qExpected, q);
+        assertEquals(0, i);
+    }
+    
+    @Test
+    public final void testisZeroZero() {
+        /*
+         * Set up variables
+         */
+        NaturalNumber q = new NaturalNumber3("0");
+        NaturalNumber qExpected = new NaturalNumber3("0");
+        /*
+         * Call method under test
+         */
+        boolean i = q.isZero();
+        /*
+         * Assert that values of variables match expectations
+         */
+        assertEquals(qExpected, q);
+        assertEquals(true, i);
+    }
+}
