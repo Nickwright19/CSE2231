@@ -137,7 +137,7 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
         assert 0 <= k : "Violation of: 0 <= k";
         assert k < RADIX : "Violation of: k < 10";
 
-        
+        //if ("".equals("0")){add a zero to the end of the string, multiplying it by 10}
 
     }
 
