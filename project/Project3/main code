@@ -3,6 +3,8 @@ import java.util.NoSuchElementException;
 
 import components.map.Map;
 import components.map.MapSecondary;
+import components.map.Map.Pair;
+import components.map.MapSecondary.SimplePair;
 
 /**
  * {@code Map} represented as a hash table using {@code Map}s for the buckets,
@@ -79,7 +81,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         buckets = a % b;
 
         if (buckets < 0) {
-            buckets = (a % b) / b;
+            buckets = (a % b) + b;
         }
 
         return buckets;
@@ -108,8 +110,10 @@ public class Map4<K, V> extends MapSecondary<K, V> {
          */
         this.hashTable = new Map[hashTableSize];
 
-        // TODO - fill in rest of body
-
+        for (int i = 0; i < hashTableSize; i++) {
+            this.hashTable[i] = new Map<K, V>();
+        }
+        this.size = 0;
     }
 
     /*
@@ -194,11 +198,14 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final Pair<K, V> remove(K key) {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
+        
+        V value = null;
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+        Pair<K, V> temp = new SimplePair<>(key, value);
+        
+        
+        
+        return temp;
     }
 
     @Override
