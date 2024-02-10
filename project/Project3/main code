@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import components.map.Map;
 import components.map.MapSecondary;
 import components.map.Map.Pair;
-import components.map.MapSecondary.SimplePair;
+//import components.map.MapSecondary.SimplePair;
 
 /**
  * {@code Map} represented as a hash table using {@code Map}s for the buckets,
@@ -111,7 +111,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         this.hashTable = new Map[hashTableSize];
 
         for (int i = 0; i < hashTableSize; i++) {
-            this.hashTable[i] = new Map<K, V>();
+            this.hashTable[i] = this.newInstance();
         }
         this.size = 0;
     }
@@ -190,32 +190,38 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert value != null : "Violation of: value is not null";
         assert !this.hasKey(key) : "Violation of: key is not in DOMAIN(this)";
 
-        // TODO - fill in body
-
+        //check for errors if key is already in there
+        int bucket = mod(key.hashCode(), this.hashTable.length);
+        if (this.hashTable[bucket] == null) {
+            this.hashTable[bucket] = this.newInstance();
+        }
+        this.hashTable[bucket].add(key, value);
+        this.size++;
     }
 
     @Override
     public final Pair<K, V> remove(K key) {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
-        
-        V value = null;
 
-        Pair<K, V> temp = new SimplePair<>(key, value);
-        
-        
-        
-        return temp;
+        int bucket = mod(key.hashCode(), this.hashTable.length);
+        Pair<K, V> removedPair = this.hashTable[bucket].remove(key);
+        this.size--;
+        return removedPair;
     }
 
     @Override
     public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+        for (Map<K, V> bucket : this.hashTable) {
+            if (bucket != null && bucket.size() > 0) {
+                Pair<K, V> removedPair = bucket.removeAny();
+                this.size--;
+                return removedPair;
+            }
+        }
+        throw new NoSuchElementException("No elements to remove");
     }
 
     @Override
@@ -223,29 +229,26 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+        int bucket = mod(key.hashCode(), this.hashTable.length);
+        return this.hashTable[bucket].value(key);
     }
 
     @Override
     public final boolean hasKey(K key) {
         assert key != null : "Violation of: key is not null";
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return false;
-    }
+        int bucket = mod(key.hashCode(), this.hashTable.length);
+        return this.hashTable[bucket] != null && this.hashTable[bucket].hasKey(key);    }
 
     @Override
     public final int size() {
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return 0;
+        int totalSize = 0;
+        for (Map<K, V> bucket : this.hashTable) {
+            if (bucket != null) {
+                totalSize += bucket.size();
+            }
+        }
+        return totalSize;
     }
 
     @Override
