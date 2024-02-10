@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import components.map.Map;
 
 /**
@@ -79,5 +83,284 @@ public abstract class MapTest {
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,
     // hasKey, and size
+
+    /**
+     * Test Constructor.
+    */
+   @Test
+   public final void testConstructor() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+       Map<String, String> sExpected = this.createFromArgsRef("Bob", "25", "Dave", "19");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+   /**
+    * Test Constructor.
+   */
+  @Test
+   public final void testConstructorEmpty() {
+      /*
+       * ,* Set up variables ,
+       */
+      Map<String, String> s = this.createFromArgsTest();
+      Map<String, String> sExpected = this.createFromArgsRef();
+      /*
+       * ,* Assert that values of variables match expectations ,
+       */
+      assertEquals(s, sExpected);
+  }
+  /**
+   * Test Constructor.
+  */
+ @Test
+   public final void testConstructorWithSixKVPairs() {
+     /*
+      * ,* Set up variables ,
+      */
+     Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19",
+             "Doug", "29", "James", "95", "Fatima", "19", "Rebecca", "31");
+     Map<String, String> sExpected = this.createFromArgsRef("Bob", "25",
+             "Dave", "19", "Doug", "29", "James", "95", "Fatima", "19", "Rebecca", "31");
+     /*
+      * ,* Assert that values of variables match expectations ,
+      */
+     assertEquals(s, sExpected);
+ }
+
+   /**
+    * Test add.
+    */
+   @Test
+   public final void testAddEmptyAtStart() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest();
+       Map<String, String> sExpected = this.createFromArgsRef("Dave", "23");
+       /*
+        * ,* Call method under test ,
+        */
+       s.add("Dave", "23");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+   /**
+    * Test add.
+    */
+   @Test
+   public final void testAddMultiple() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest();
+       Map<String, String> sExpected = this.createFromArgsRef("Dave", "23",
+               "Mark", "26", "Laura", "19");
+       /*
+        * ,* Call method under test ,
+        */
+       s.add("Dave", "23");
+       s.add("Mark", "26");
+       s.add("Laura", "19");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+   /**
+    * Test add.
+    */
+   @Test
+   public final void testAdd() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest();
+       Map<String, String> sExpected = this.createFromArgsRef("Dave", "23");
+       /*
+        * ,* Call method under test ,
+        */
+       s.add("Dave", "23");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+
+   /**
+    * Test remove.
+    */
+   @Test
+   public final void testRemove() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+       Map<String, String> sExpected = this.createFromArgsRef("Bob", "25");
+       /*
+        * ,* Call method under test ,
+        */
+       s.remove("Dave");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+   /**
+    * Test remove.
+    */
+   @Test
+   public final void testRemoveNonExistentKey() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+       Map<String, String> sExpected = this.createFromArgsRef("Bob", "25", "Dave", "19");
+       /*
+        * ,* Call method under test ,
+        */
+       s.remove("Billy");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+   /**
+    * Test remove.
+    */
+   @Test
+   public final void testRemoveMany() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19",
+               "Connor", "20", "Maddy", "23");
+       Map<String, String> sExpected = this.createFromArgsRef("Bob", "25");
+       /*
+        * ,* Call method under test ,
+        */
+       s.remove("Dave");
+       s.remove("Connor");
+       s.remove("Maddy");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+
+
+
+   /**
+    * Test remove any.
+    */
+   @Test
+   public final void testRemoveAny() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+       Map<String, String> sExpected = this.createFromArgsRef("Dave", "19");
+       /*
+        * ,* Call method under test ,
+        */
+       s.removeAny();
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(s, sExpected);
+   }
+
+  /**
+   * Test value.
+   */
+  @Test
+   public final void testValue() {
+      /*
+       * ,* Set up variables ,
+       */
+      Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+      Map<String, String> sExpected = this.createFromArgsRef("Bob", "25", "Dave", "19");
+      /*
+       * ,* Call method under test ,
+       */
+      String name = "";
+      name = s.value("19");
+      /*
+       * ,* Assert that values of variables match expectations ,
+       */
+      assertEquals(name, "Dave");
+
+      assertEquals(s, sExpected);
+  }
+
+
+   /**
+    * Test has Key.
+    */
+   @Test
+   public final void testHasKey() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+       Map<String, String> sExpected = this.createFromArgsRef("Bob", "25", "Dave", "19");
+       /*
+        * ,* Call method under test ,
+        */
+       boolean bool = s.hasKey("Bob");
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(bool, true);
+       assertEquals(s, sExpected);
+   }
+
+   /**
+    * Test size.
+    */
+   @Test
+   public final void testSize() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest("Bob", "25", "Dave", "19");
+       Map<String, String> sExpected = this.createFromArgsRef("Bob", "25", "Dave", "19");
+       /*
+        * ,* Call method under test ,
+        */
+       int size = s.size();
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(size, 2);
+       assertEquals(s, sExpected);
+   }
+
+   /**
+    * Test size.
+    */
+   @Test
+   public final void testSizeEmpty() {
+       /*
+        * ,* Set up variables ,
+        */
+       Map<String, String> s = this.createFromArgsTest();
+       Map<String, String> sExpected = this.createFromArgsRef();
+       /*
+        * ,* Call method under test ,
+        */
+       int size = s.size();
+       /*
+        * ,* Assert that values of variables match expectations ,
+        */
+       assertEquals(size, 0);
+       assertEquals(s, sExpected);
+   }
 
 }
